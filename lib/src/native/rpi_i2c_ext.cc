@@ -50,8 +50,8 @@ int serialOpen(Dart_NativeArguments arguments)
   Dart_Handle arg1 = HandleError(Dart_GetNativeArgument(arguments, 1));
   Dart_Handle arg2 = HandleError(Dart_GetNativeArgument(arguments, 2));
 
-  char device;
-  int baud;
+  char *device;
+  int64_t baud;
   HandleError(Dart_StringToCString(arg1, &device));
   HandleError(Dart_IntegerToInt64(arg2, &baud));
 
@@ -152,7 +152,7 @@ void serialFlush(Dart_NativeArguments arguments)
   Dart_EnterScope();
   Dart_Handle arg1 = HandleError(Dart_GetNativeArgument(arguments, 1));
 
-  int fd;
+  int64_t fd;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
 
   tcflush(fd, TCIOFLUSH);
@@ -173,7 +173,7 @@ void serialClose(Dart_NativeArguments arguments)
   Dart_EnterScope();
   Dart_Handle arg1 = HandleError(Dart_GetNativeArgument(arguments, 1));
 
-  int fd;
+  int64_t fd;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
 
   close(fd);
@@ -196,14 +196,13 @@ void serialPutchar(Dart_NativeArguments arguments)
   Dart_Handle arg1 = HandleError(Dart_GetNativeArgument(arguments, 1));
   Dart_Handle arg2 = HandleError(Dart_GetNativeArgument(arguments, 2));
 
-  int fd;
-  unsigned char c;
-  int tempInt;
+  int64_t fd;
+  //set to 1 for now
+  unsigned char c = "1";
+  int64_t tempInt;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
   //TODO: find the right dart/c conversion method, then change to c
   HandleError(Dart_IntegerToInt64(arg2, &tempInt));
-  //set to x for now
-  c = "x";
 
   write(fd, &c, 1);
 
@@ -256,7 +255,7 @@ int serialDataAvail(Dart_NativeArguments arguments)
   Dart_EnterScope();
   Dart_Handle arg1 = HandleError(Dart_GetNativeArgument(arguments, 1));
 
-  int fd;
+  int64_t fd;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
 
   //TODO: make it int64_t?
@@ -283,7 +282,7 @@ int serialGetchar(Dart_NativeArguments arguments)
   Dart_EnterScope();
   Dart_Handle arg1 = HandleError(Dart_GetNativeArgument(arguments, 1));
 
-  int fd;
+  int64_t fd;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
 
   int64_t result = 0;
