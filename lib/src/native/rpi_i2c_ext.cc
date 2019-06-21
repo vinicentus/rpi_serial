@@ -225,7 +225,7 @@ void serialPuts(Dart_NativeArguments arguments)
   Dart_Handle arg2 = HandleError(Dart_GetNativeArgument(arguments, 2));
 
   int64_t fd;
-  char *s;
+  char s[];
   HandleError(Dart_IntegerToInt64(arg1, &fd));
   //TODO: check that this is the right dart/c conversion method
   HandleError(Dart_StringToCString(arg2, s));
@@ -316,10 +316,12 @@ FunctionLookup function_list[] = {
     //TODO: {"serialPrintf", serialPrintf},
     {"serialDataAvail", serialDataAvail},
     {"serialGetchar", serialGetchar},
-    {NULL, NULL}};
+    {NULL, NULL},
+};
 
 FunctionLookup no_scope_function_list[] = {
-    {NULL, NULL}};
+    {NULL, NULL},
+};
 
 // Resolve the Dart name of the native function into a C function pointer.
 // This is called once per native method.
