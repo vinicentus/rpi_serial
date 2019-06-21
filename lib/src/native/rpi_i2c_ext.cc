@@ -315,9 +315,8 @@ FunctionLookup function_list[] = {
     {"serialPuts", serialPuts},
     //TODO: {"serialPrintf", serialPrintf},
     {"serialDataAvail", serialDataAvail},
-    {"serialGetchar", serialGetchar},
-    //{NULL, NULL} TODO: check why this was here
-    };
+    {"serialGetchar", serialGetchar}
+    {NULL, NULL}};
 
 FunctionLookup no_scope_function_list[] = {
     {NULL, NULL}};
