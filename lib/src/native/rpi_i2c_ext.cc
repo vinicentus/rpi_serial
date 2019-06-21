@@ -197,8 +197,8 @@ void serialPutchar(Dart_NativeArguments arguments)
   Dart_Handle arg2 = HandleError(Dart_GetNativeArgument(arguments, 2));
 
   int64_t fd;
-  //set to 1 for now
-  const unsigned char c = "1";
+  //set to 1 for now, it appears to be a number (it's unsigned)
+  unsigned char c = 1;
   int64_t tempInt;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
   //TODO: find the right dart/c conversion method, then change to c
@@ -228,7 +228,7 @@ void serialPuts(Dart_NativeArguments arguments)
   char *s;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
   //TODO: check that this is the right dart/c conversion method
-  HandleError(Dart_StringToCString(arg2, &s));
+  HandleError(Dart_StringToCString(arg2, s));
 
   write(fd, s, strlen(s));
 
@@ -316,7 +316,8 @@ FunctionLookup function_list[] = {
     //TODO: {"serialPrintf", serialPrintf},
     {"serialDataAvail", serialDataAvail},
     {"serialGetchar", serialGetchar},
-    {NULL, NULL}};
+    //{NULL, NULL} TODO: check why this was here
+    };
 
 FunctionLookup no_scope_function_list[] = {
     {NULL, NULL}};
