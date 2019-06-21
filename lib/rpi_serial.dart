@@ -10,8 +10,9 @@ class RpiSerial extends Serial {
   final _devices = <RpiSerialDevice>[];
 
   RpiSerial() {
-    if (_instantiatedSerial)
+    if (_instantiatedSerial) {
       throw new SerialException('Serial already instantiated');
+    }
     _instantiatedSerial = true;
   }
 
@@ -62,9 +63,10 @@ class RpiSerialDevice extends SerialDevice {
 
   /// Throw an exception if [value] is less than zero, else return [value].
   int _throwIfNegative(int value) {
-    if (value < 0)
+    if (value < 0) {
       throw new SerialException(
           'operation failed: $value', port, _lastError(value));
+    }
     return value;
   }
 
