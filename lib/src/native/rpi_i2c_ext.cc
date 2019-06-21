@@ -309,12 +309,14 @@ struct FunctionLookup
 };
 
 FunctionLookup function_list[] = {
-    {"disposeDevice", disposeDevice},
-    {"lastError", lastError},
-    {"readByte", readByte},
-    {"readBytes", readBytes},
-    {"setupDevice", setupDevice},
-    {"writeByte", writeByte},
+    {"serialOpen", serialOpen},
+    {"serialFlush", serialFlush},
+    {"serialClose", serialClose},
+    {"serialPutchar", serialPutchar},
+    {"serialPuts", serialPuts},
+    //TODO: {"serialPrintf", serialPrintf},
+    {"serialDataAvail", serialDataAvail},
+    {"serialGetchar", serialGetchar},
     {NULL, NULL}};
 
 FunctionLookup no_scope_function_list[] = {
