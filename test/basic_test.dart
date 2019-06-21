@@ -1,5 +1,5 @@
-import 'package:rpi_i2c/i2c.dart';
-import 'package:rpi_i2c/rpi_i2c.dart';
+import 'package:rpi_serial/serial.dart';
+import 'package:rpi_serial/rpi_serial.dart';
 import 'package:test/test.dart';
 
 import 'test_util.dart';

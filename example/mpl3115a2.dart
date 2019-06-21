@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:rpi_i2c/i2c.dart';
+import 'package:rpi_serial/serial.dart';
 
 /// MPL3115A2 - I2C precision pressure sensor with altimetry.
 /// See https://www.nxp.com/docs/en/data-sheet/MPL3115A2.pdf

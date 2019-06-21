@@ -1,7 +1,7 @@
-import 'package:rpi_i2c/i2c.dart';
+import 'package:rpi_serial/serial.dart';
 import '../example/example.dart' show readSensor;
 import '../example/mpl3115a2.dart';
-import 'package:rpi_i2c/rpi_i2c.dart';
+import 'package:rpi_serial/rpi_serial.dart';
 import 'package:test/test.dart';
 
 import 'test_util.dart';

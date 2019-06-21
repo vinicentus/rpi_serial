@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:rpi_i2c/rpi_i2c.dart';
+import 'package:rpi_serial/rpi_serial.dart';
 
 import 'mpl3115a2.dart';
 

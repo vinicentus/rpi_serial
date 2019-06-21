@@ -1,4 +1,4 @@
-import 'package:rpi_i2c/i2c.dart';
+import 'package:rpi_serial/serial.dart';
 
 import 'dart-ext:rpi_i2c_ext';
 

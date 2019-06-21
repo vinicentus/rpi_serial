@@ -1,4 +1,4 @@
-import 'package:rpi_i2c/i2c.dart';
+import 'package:rpi_serial/serial.dart';
 
 /// TTP229-LSF - I2C touch pad detector.
 /// See http://www.tontek.com.tw/uploads/product/106/TTP229-LSF_V1.0_EN.pdf
