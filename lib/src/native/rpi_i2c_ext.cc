@@ -178,8 +178,8 @@ void serialClose(Dart_NativeArguments arguments)
 
   close(fd);
 
-  //return 1 for now TODO: don't return anything?
-  Dart_SetIntegerReturnValue(arguments, 1);
+  //return 0
+  Dart_SetIntegerReturnValue(arguments, 0);
   Dart_ExitScope();
 }
 
