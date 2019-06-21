@@ -50,7 +50,7 @@ int serialOpen(Dart_NativeArguments arguments)
   Dart_Handle arg1 = HandleError(Dart_GetNativeArgument(arguments, 1));
   Dart_Handle arg2 = HandleError(Dart_GetNativeArgument(arguments, 2));
 
-  char *device;
+  const char *device;
   int64_t baud;
   HandleError(Dart_StringToCString(arg1, &device));
   HandleError(Dart_IntegerToInt64(arg2, &baud));
@@ -198,7 +198,7 @@ void serialPutchar(Dart_NativeArguments arguments)
 
   int64_t fd;
   //set to 1 for now
-  unsigned char c = "1";
+  const unsigned char c = "1";
   int64_t tempInt;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
   //TODO: find the right dart/c conversion method, then change to c
