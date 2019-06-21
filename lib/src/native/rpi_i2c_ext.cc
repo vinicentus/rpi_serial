@@ -225,6 +225,7 @@ void serialPuts(Dart_NativeArguments arguments)
   Dart_Handle arg2 = HandleError(Dart_GetNativeArgument(arguments, 2));
 
   int64_t fd;
+  //https://github.com/dart-lang/sdk/blob/7b893ce825fbdd2549cc3b3d29d566d9aba05f00/samples/sample_extension/sample_extension.cc#L165-L166
   const char *s;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
   //TODO: check that this is the right dart/c conversion method
