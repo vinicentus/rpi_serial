@@ -1,25 +1,17 @@
-import 'dart:async';
-
 import 'package:rpi_serial/rpi_serial.dart';
 
-import 'mpl3115a2.dart';
+import 'arduino_serialpassthrough.dart';
 
 main() async {
-  final i2c = new RpiI2C();
-  await readSensor(new Mpl3115a2(i2c));
-  i2c.dispose();
+  final serial_connection = new RpiSerial();
+  await testSensor(new Arduino(serial_connection));
+  serial_connection.dispose();
 }
 
-Future readSensor(Mpl3115a2 mpl3115a2) async {
-  Mpl3115a2Data result;
+testSensor(Arduino arduino) {
+  print("Writing 1");
+  arduino.writeInt(1);
 
-  print('Pressure and temperature:');
-  result = await mpl3115a2.read();
-  print('  pressure: ${result.pressure} pascals');
-  print('  temperature: ${result.temperature} celsius');
-
-  print('Altitude and temperature:');
-  result = await mpl3115a2.read(altitude: true);
-  print('  altitude: ${result.altitude} meters');
-  print('  temperature: ${result.temperature} celsius');
+  print("Reading");
+  print(arduino.readInt());
 }

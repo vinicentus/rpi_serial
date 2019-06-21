@@ -1,3 +1,4 @@
+//TODO: check dependencies
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -197,9 +198,10 @@ void serialPutchar(Dart_NativeArguments arguments)
 
   int fd;
   unsigned char c;
+  int tempInt;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
-  //TODO: find the right dart/c conversion method
-  HandleError(Dart_StringToCString(arg2, &c));
+  //TODO: find the right dart/c conversion method, then change to c
+  HandleError(Dart_IntegerToInt64(arg2, &tempInt));
   //set to x for now
   c = "x";
 

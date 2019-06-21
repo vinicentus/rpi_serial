@@ -1,55 +1,61 @@
-/// Base I2C interface supported by all I2C implementations.
-abstract class I2C {
-  final _allocatedAddresses = <int>[];
+//port == device?
 
-  /// Check that the address can be used for I2C
+/// Base Serial interface supported by all Serial implementations.
+abstract class Serial {
+  final _allocatedAddresses = <String>[];
+
+  /// Check that the port can be used for Serial
   /// and that is has not already been allocated.
   /// This should be called by subclasses not clients.
-  void allocateAddress(int address) {
-    if (_allocatedAddresses.contains(address)) {
-      throw new I2CException('Already allocated', address);
+  void allocatePort(String port) {
+    if (_allocatedAddresses.contains(port)) {
+      throw new SerialException('Already allocated', port);
     }
-    _allocatedAddresses.add(address);
+    _allocatedAddresses.add(port);
   }
 
-  /// Return the [I2CDevice] for communicating with the device at [address].
-  I2CDevice device(int address);
+  /// Return the [SerialDevice] for communicating with the device at [port].
+  SerialDevice device(String port, int baud);
 
   /// Call dispose before exiting your application to cleanup native resources.
   void dispose();
 }
 
-/// An I2C Device
-abstract class I2CDevice {
-  final int address;
+/// A Serial Device
+abstract class SerialDevice {
+  final String port;
+  final int baud;
 
-  I2CDevice(this.address);
+  SerialDevice(this.port, this.baud);
 
-  /// Read a byte from register #[register].
-  int readByte(int register);
+  /// Returns the number of characters available for reading.
+  int serialDataAvail();
 
-  /// Read [values].length # of bytes from the device (no register)
-  /// into [values] where the [values].length is between 1 and 32 inclusive.
-  /// Return the # of bytes read.
-  int readBytes(List<int> values);
+  /// Returns the next character available on the serial device. This call will block for up to 10 seconds if no data is available
+  int serialGetchar();
 
-  /// Write a byte to register #[register].
-  void writeByte(int register, int value);
+  /// Sends the single byte [char] to the serial device identified by the given file descriptor.
+  void serialPutchar(int char);
+
+  /// Sends the nul-terminated string [s] to the serial device identified by the given file descriptor.
+  void serialPuts(String s);
+
+  //TODO: add more methods
 }
 
-/// Exceptions thrown by I2C.
-class I2CException {
+/// Exceptions thrown by Serial.
+class SerialException {
   final String message;
-  final int address;
+  final String port;
   final int errorNumber;
 
-  I2CException(this.message, [this.address, this.errorNumber]);
+  SerialException(this.message, [this.port, this.errorNumber]);
 
   @override
   String toString() {
     String msg = message;
-    if (address != null) msg = '$msg, address: $address';
+    if (port != null) msg = '$msg, port: $port';
     if (errorNumber != null) msg = '$msg, error: $errorNumber';
-    return 'I2CException: $msg';
+    return 'SerialException: $msg';
   }
 }

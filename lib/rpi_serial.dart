@@ -1,24 +1,26 @@
 import 'package:rpi_serial/serial.dart';
 
+//TODO: change name of external lib
 import 'dart-ext:rpi_i2c_ext';
 
-/// The [I2C] interface used for accessing I2C devices on the Raspberry Pi.
-class RpiI2C extends I2C {
-  static bool _instantiatedI2C = false;
+/// The [Serial] interface used for accessing Serial devices on the Raspberry Pi.
+class RpiSerial extends Serial {
+  static bool _instantiatedSerial = false;
 
-  final _devices = <RpiI2CDevice>[];
+  final _devices = <RpiSerialDevice>[];
 
-  RpiI2C() {
-    if (_instantiatedI2C) throw new I2CException('RpiI2C already instantiated');
-    _instantiatedI2C = true;
+  RpiSerial() {
+    if (_instantiatedSerial)
+      throw new SerialException('Serial already instantiated');
+    _instantiatedSerial = true;
   }
 
   @override
-  I2CDevice device(int address) {
-    allocateAddress(address);
-    int fd = _setupDevice(address);
-    if (fd < 0) throw new I2CException('device init failed: $fd');
-    final device = new RpiI2CDevice(address, fd);
+  SerialDevice device(String port, int baud) {
+    allocatePort(port);
+    int fd = _serialOpen(port, baud);
+    if (fd < 0) throw new SerialException('device init failed: $fd');
+    final device = new RpiSerialDevice(port, fd);
     _devices.add(device);
     return device;
   }
@@ -26,45 +28,48 @@ class RpiI2C extends I2C {
   @override
   void dispose() {
     while (_devices.isNotEmpty) {
-      int result = _disposeDevice(_devices.removeLast()._fd);
-      if (result != 0) throw new I2CException('dispose failed: $result');
+      int result = _serialClose(_devices.removeLast()._fd);
+      if (result != 0) throw new SerialException('dispose failed: $result');
     }
   }
 
-  int _setupDevice(int address) native "setupDevice";
-  int _disposeDevice(int fd) native "disposeDevice";
+  int _serialOpen(String port, int baud) native "serialOpen";
+  int _serialClose(int fd) native "serialClose";
 }
 
-class RpiI2CDevice extends I2CDevice {
+class RpiSerialDevice extends SerialDevice {
   final int _fd;
 
-  RpiI2CDevice(int address, this._fd) : super(address);
+  RpiSerialDevice(String port, this._fd) : super(port);
 
   @override
-  int readByte(int register) => _throwIfNegative(_readByte(_fd, register));
-
-  @override
-  int readBytes(List<int> values) {
-    if (values == null || values.length < 1 || values.length > 32)
-      throw new I2CException(
-          'Expected values length between 1 and 32', address);
-    return _throwIfNegative(_readBytes(_fd, values));
+  int serialDataAvail() {
+    return _throwIfNegative(_serialDataAvail(_fd));
   }
 
   @override
-  void writeByte(int register, int value) {
-    _throwIfNegative(_writeByte(_fd, register, value));
+  int serialGetchar() => _throwIfNegative(_serialGetchar(_fd));
+
+  @override
+  void serialPutchar(int char) {
+    _throwIfNegative(_serialPutchar(_fd, char));
+  }
+
+  @override
+  void serialPuts(String s) {
+    _throwIfNegative(_serialPuts(_fd, s));
   }
 
   /// Throw an exception if [value] is less than zero, else return [value].
   int _throwIfNegative(int value) {
     if (value < 0)
-      throw new I2CException('operation failed: $value', address, _lastError());
+      throw new SerialException('operation failed: $value', port, _lastError());
     return value;
   }
 
-  int _lastError() native "lastError";
-  int _readByte(int fd, int register) native "readByte";
-  int _readBytes(int fd, List<int> values) native "readBytes";
-  int _writeByte(int fd, int register, int data) native "writeByte";
+  int _serialDataAvail(int fd) native "serialDataAvail";
+  int _serialGetchar(int fd) native "serialGetchar";
+  //TODO: find better type
+  int _serialPutchar(int fd, int c) native "serialPutchar";
+  int _serialPuts(int fd, String s) native "serialPuts";
 }
