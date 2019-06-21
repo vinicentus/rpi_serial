@@ -9,7 +9,7 @@ abstract class Serial {
   /// This should be called by subclasses not clients.
   void allocatePort(String port) {
     if (_allocatedAddresses.contains(port)) {
-      throw new SerialException('Already allocated', port);
+      throw new SerialException('Already allocated', port: port);
     }
     _allocatedAddresses.add(port);
   }
@@ -48,14 +48,17 @@ class SerialException {
   final String message;
   final String port;
   final int errorNumber;
+  final String fileDescriptor;
 
-  SerialException(this.message, [this.port, this.errorNumber]);
+  SerialException(this.message,
+      {this.port, this.errorNumber, this.fileDescriptor});
 
   @override
   String toString() {
     String msg = message;
     if (port != null) msg = '$msg, port: $port';
     if (errorNumber != null) msg = '$msg, error: $errorNumber';
+    if (fileDescriptor != null) msg = '$msg, fd: $fileDescriptor';
     return 'SerialException: $msg';
   }
 }
