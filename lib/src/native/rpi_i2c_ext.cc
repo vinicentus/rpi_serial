@@ -314,7 +314,6 @@ FunctionLookup function_list[] = {
     {"serialClose", serialClose},
     {"serialPutchar", serialPutchar},
     {"serialPuts", serialPuts},
-    //TODO: {"serialPrintf", serialPrintf},
     {"serialDataAvail", serialDataAvail},
     {"serialGetchar", serialGetchar},
     {NULL, NULL},
