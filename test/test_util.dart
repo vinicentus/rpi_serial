@@ -5,7 +5,7 @@ expectThrows(f()) async {
   try {
     await f();
     fail('expected exception');
-  } on I2CException {
+  } on SerialException {
     // Expected... fall through
   }
 }

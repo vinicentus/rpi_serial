@@ -5,14 +5,14 @@ import 'package:test/test.dart';
 import 'test_util.dart';
 
 main() {
-  final i2c = new RpiI2C();
-  runTests(i2c);
-  test('dispose', () => i2c.dispose());
+  final serial = new RpiSerial();
+  runTests(serial);
+  test('dispose', () => serial.dispose());
 }
 
-runTests(I2C i2c) {
+runTests(Serial serial) {
   test('exceptions', () async {
     // Only one instance of I2C factory
-    await expectThrows(() => new RpiI2C());
+    await expectThrows(() => new RpiSerial());
   });
 }
