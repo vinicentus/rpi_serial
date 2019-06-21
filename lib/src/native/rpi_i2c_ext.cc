@@ -14,8 +14,6 @@
 #include "include/dart_api.h"
 #include "include/dart_native_api.h"
 
-//TODO: maybe include errno and this
-/*
 Dart_Handle HandleError(Dart_Handle handle) {
   if (Dart_IsError(handle)) {
     Dart_PropagateError(handle);
@@ -23,6 +21,8 @@ Dart_Handle HandleError(Dart_Handle handle) {
   return handle;
 }
 
+//TODO: maybe include errno and this
+/*
 // The errno from the last I2C command
 static volatile int64_t lastErrno = 0;
 
