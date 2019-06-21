@@ -98,12 +98,14 @@ void serialOpen(Dart_NativeArguments arguments)
       //TODO: break out
       Dart_SetIntegerReturnValue(arguments, -2);
       Dart_ExitScope();
+      return;
   }
 
   if ((fd = open(device, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1)
     //TODO: break out
     Dart_SetIntegerReturnValue(arguments, -1);
     Dart_ExitScope();
+    return;
 
   fcntl(fd, F_SETFL, O_RDWR);
 
