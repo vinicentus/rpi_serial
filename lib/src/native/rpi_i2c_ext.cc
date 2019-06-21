@@ -44,7 +44,7 @@ void lastError(Dart_NativeArguments arguments) {
  */
 
 //TODO: const char *device, const int baud
-int serialOpen(Dart_NativeArguments arguments)
+void serialOpen(Dart_NativeArguments arguments)
 {
   Dart_EnterScope();
   Dart_Handle arg1 = HandleError(Dart_GetNativeArgument(arguments, 1));
@@ -251,7 +251,7 @@ void serialPuts(Dart_NativeArguments arguments)
  *********************************************************************************
  */
 
-int serialDataAvail(Dart_NativeArguments arguments)
+void serialDataAvail(Dart_NativeArguments arguments)
 {
   Dart_EnterScope();
   Dart_Handle arg1 = HandleError(Dart_GetNativeArgument(arguments, 1));
@@ -278,7 +278,7 @@ int serialDataAvail(Dart_NativeArguments arguments)
  *********************************************************************************
  */
 
-int serialGetchar(Dart_NativeArguments arguments)
+void serialGetchar(Dart_NativeArguments arguments)
 {
   Dart_EnterScope();
   Dart_Handle arg1 = HandleError(Dart_GetNativeArgument(arguments, 1));
