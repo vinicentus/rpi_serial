@@ -20,7 +20,7 @@ class RpiSerial extends Serial {
     allocatePort(port);
     int fd = _serialOpen(port, baud);
     if (fd < 0) throw new SerialException('device init failed: $fd');
-    final device = new RpiSerialDevice(port, fd);
+    final device = new RpiSerialDevice(port, baud, fd);
     _devices.add(device);
     return device;
   }
@@ -40,7 +40,7 @@ class RpiSerial extends Serial {
 class RpiSerialDevice extends SerialDevice {
   final int _fd;
 
-  RpiSerialDevice(String port, this._fd) : super(port);
+  RpiSerialDevice(String port, int baud, this._fd) : super(port, baud);
 
   @override
   int serialDataAvail() {
@@ -63,10 +63,13 @@ class RpiSerialDevice extends SerialDevice {
   /// Throw an exception if [value] is less than zero, else return [value].
   int _throwIfNegative(int value) {
     if (value < 0)
-      throw new SerialException('operation failed: $value', port, _lastError());
+      throw new SerialException(
+          'operation failed: $value', port, _lastError(value));
     return value;
   }
 
+  //TODO: implement
+  int _lastError(int value) => value;
   int _serialDataAvail(int fd) native "serialDataAvail";
   int _serialGetchar(int fd) native "serialGetchar";
   //TODO: find better type
