@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 
-const pkgName = 'rpi_i2c';
+const pkgName = 'rpi_serial';
 const buildScriptVersion = 2;
 
 main(List<String> args) {
