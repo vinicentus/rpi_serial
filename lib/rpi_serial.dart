@@ -61,6 +61,11 @@ class RpiSerialDevice extends SerialDevice {
     _throwIfNegative(_serialPuts(_fd, s));
   }
 
+  @override
+  void serialFlush() {
+    _throwIfNegative(_serialFlush(_fd));
+  }
+
   /// Throw an exception if [value] is less than zero, else return [value].
   int _throwIfNegative(int value) {
     if (value < 0) {
@@ -77,4 +82,5 @@ class RpiSerialDevice extends SerialDevice {
   //TODO: find better type
   int _serialPutchar(int fd, int c) native "serialPutchar";
   int _serialPuts(int fd, String s) native "serialPuts";
+  int _serialFlush(int fd) native "serialFlush";
 }

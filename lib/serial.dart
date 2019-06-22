@@ -40,7 +40,10 @@ abstract class SerialDevice {
   /// Sends the nul-terminated string [s] to the serial device identified by the given file descriptor.
   void serialPuts(String s);
 
-  //TODO: add more methods
+  //TODO: implement
+  //void  serialPrintf (String message);
+
+  void serialFlush ();
 }
 
 /// Exceptions thrown by Serial.

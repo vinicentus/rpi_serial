@@ -20,7 +20,7 @@ runTests(Serial serial) {
     await expectThrows(() => new Arduino(serial));
   });
 
-  test('loopback test with numbers', () async {
+  test('loopback test with numbers', () {
     final List<int> values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     List<int> receivedValues = [];
     for (int value in values) {
@@ -30,5 +30,13 @@ runTests(Serial serial) {
 
     expect(receivedValues.length, 10);
     expect(receivedValues, values);
+  });
+
+  test('flush', () {
+    fake_arduino.flush();
+  });
+
+  test('number of bytes available', () {
+    expect(fake_arduino.dataAvail(), 1);
   });
 }

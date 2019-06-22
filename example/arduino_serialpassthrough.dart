@@ -22,4 +22,12 @@ class Arduino {
   writeInt(int char) {
     device.serialPutchar(char);
   }
+
+  flush() {
+    device.serialFlush();
+  }
+
+  int dataAvail() {
+    return device.serialDataAvail();
+  }
 }
