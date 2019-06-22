@@ -3,8 +3,6 @@
 /// Use the SerialPassthrough sketch on any arduino with the right voltage level.abstract
 /// Connect it up and get going. TODO: write more.
 
-import 'dart:async';
-
 import 'package:rpi_serial/serial.dart';
 
 /// Any Arduino, set up to forward serial messages from pc to raspberry pi and vice versa
@@ -20,8 +18,7 @@ class Arduino {
   }
 
   //TODO: maybe wait for data available
-  Future<int> readInt() async {
-    await Future.delayed(const Duration(milliseconds: 1));
+  int readInt() {
     return device.serialGetchar();
   }
 
