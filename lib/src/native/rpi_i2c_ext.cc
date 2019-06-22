@@ -267,8 +267,7 @@ void serialDataAvail(Dart_NativeArguments arguments)
   int64_t fd;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
 
-  //TODO: make it int64_t?
-  int result;
+  int64_t result;
 
   if (ioctl(fd, FIONREAD, &result) == -1)
     result = -1;
