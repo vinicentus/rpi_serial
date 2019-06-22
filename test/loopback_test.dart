@@ -34,11 +34,12 @@ runTests(Serial serial) {
     expect(receivedValues, values);
   });
 
-  test('string', () {
+  test('string', () async {
     String startString = "This is a string... 12345";
     List<String> result;
     fake_arduino.writeStr(startString);
-    while (fake_arduino.dataAvail() > 1) {
+    await Future.delayed(const Duration(milliseconds: 10));
+    while (fake_arduino.dataAvail() >= 1) {
       result.add(fake_arduino.readChar());
     }
     expect(startString, result.join());
@@ -49,7 +50,7 @@ runTests(Serial serial) {
     expect(fake_arduino.dataAvail(), 0);
 
     fake_arduino.writeChar("a");
-    await Future.delayed(const Duration(milliseconds: 50));
+    await Future.delayed(const Duration(milliseconds: 10));
     expect(fake_arduino.dataAvail(), 1);
   });
 }
