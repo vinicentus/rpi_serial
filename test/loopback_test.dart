@@ -41,10 +41,10 @@ runTests(Serial serial) {
   });
 
   test('test flush and dataAvail', () async {
-    fake_arduino.writeInt(9);
-    expect(fake_arduino.dataAvail(), 1);
-
     fake_arduino.flush();
     expect(fake_arduino.dataAvail(), 0);
+    
+    fake_arduino.writeInt(9);
+    expect(fake_arduino.dataAvail(), 1);
   });
 }
