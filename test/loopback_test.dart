@@ -20,11 +20,12 @@ runTests(Serial serial) {
     await expectThrows(() => new Arduino(serial));
   });
 
-  test('loopback test with numbers', () {
+  test('loopback test with numbers', () async {
     final List<int> values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     List<int> receivedValues = [];
     for (int value in values) {
       fake_arduino.writeInt(value);
+      await Future.delayed(Duration(milliseconds: 50));
       receivedValues.add(fake_arduino.readInt());
     }
 
