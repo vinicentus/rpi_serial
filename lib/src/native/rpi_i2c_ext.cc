@@ -206,11 +206,9 @@ void serialPutchar(Dart_NativeArguments arguments)
 
   int64_t fd;
   //set to 1 for now, it appears to be a number (it's unsigned)
-  unsigned char c = 1;
-  int64_t tempInt;
+  const unsigned char c;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
-  //TODO: find the right dart/c conversion method, then change to c
-  HandleError(Dart_IntegerToInt64(arg2, &tempInt));
+  HandleError(Dart_StringToCString(arg2, &c));
 
   write(fd, &c, 1);
 
