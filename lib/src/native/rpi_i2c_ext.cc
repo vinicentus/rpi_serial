@@ -270,8 +270,9 @@ void serialDataAvail(Dart_NativeArguments arguments)
   int64_t result;
 
   if (ioctl(fd, FIONREAD, &result) == -1)
+  {
     result = -1;
-
+  }
   //check that this return works
   Dart_SetIntegerReturnValue(arguments, result);
   Dart_ExitScope();
