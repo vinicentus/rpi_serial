@@ -35,6 +35,20 @@ class RpiSerial extends Serial {
     }
   }
 
+  //TODO: maybe move to RpiSerialDevice
+  //TODO: add tests
+  @override
+  void disposeSpecific(String port) {
+    if (_devices.isEmpty) throw new SerialException('Nothing to dipose.');
+    RpiSerialDevice port2 = _devices.singleWhere(
+        (RpiSerialDevice device) => device.port == port,
+        orElse: () => null);
+    if (port2 == null) throw new SerialException("Can't find the device.");
+    int result = _serialClose(port2._fd);
+    _devices.remove(port2);
+    if (result != 0) throw new SerialException('dispose failed: $result');
+  }
+
   int _serialOpen(String port, int baud) native "serialOpen";
   int _serialClose(int fd) native "serialClose";
 }

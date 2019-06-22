@@ -19,6 +19,8 @@ abstract class Serial {
 
   /// Call dispose before exiting your application to cleanup native resources.
   void dispose();
+
+  void disposeSpecific(String port);
 }
 
 /// A Serial Device
