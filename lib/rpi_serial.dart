@@ -1,5 +1,6 @@
-import 'package:rpi_serial/serial.dart';
+import 'dart:convert';
 
+import 'package:rpi_serial/serial.dart';
 //TODO: change name of external lib
 import 'dart-ext:rpi_i2c_ext';
 
@@ -49,10 +50,12 @@ class RpiSerialDevice extends SerialDevice {
   }
 
   @override
-  int serialGetchar() => _throwIfNegative(_serialGetchar(_fd));
+  String serialGetchar() {
+    return AsciiDecoder().convert(<int>[_throwIfNegative(_serialGetchar(_fd))]);
+  }
 
   @override
-  void serialPutchar(int char) {
+  void serialPutchar(String char) {
     _throwIfNegative(_serialPutchar(_fd, char));
   }
 
@@ -80,7 +83,7 @@ class RpiSerialDevice extends SerialDevice {
   int _serialDataAvail(int fd) native "serialDataAvail";
   int _serialGetchar(int fd) native "serialGetchar";
   //TODO: find better type
-  int _serialPutchar(int fd, int c) native "serialPutchar";
+  int _serialPutchar(int fd, String c) native "serialPutchar";
   int _serialPuts(int fd, String s) native "serialPuts";
   int _serialFlush(int fd) native "serialFlush";
 }

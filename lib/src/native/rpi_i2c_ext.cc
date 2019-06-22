@@ -300,9 +300,11 @@ void serialGetchar(Dart_NativeArguments arguments)
   if (read(fd, &x, 1) != 1)
     result = -1;
 
+  //&0xFF is completely unnecessary?
   result = ((int)x) & 0xFF;
 
   //check that this return works
+  //TODO: also make sure sending -1 isn't an error
   Dart_SetIntegerReturnValue(arguments, result);
   Dart_ExitScope();
 }

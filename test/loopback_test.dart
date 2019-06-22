@@ -21,11 +21,11 @@ runTests(Serial serial) {
   });
 
   test('loopback test with numbers', () async {
-    final List<int> values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    List<int> receivedValues = [];
-    for (int value in values) {
-      fake_arduino.writeInt(value);
-      receivedValues.add(await fake_arduino.readInt());
+    final List<String> values = ["0","1","2", "3", "4", "5", "6", "7", "8", "9"];
+    List<String> receivedValues = [];
+    for (String value in values) {
+      fake_arduino.writeChar(value);
+      receivedValues.add(fake_arduino.readChar());
     }
 
     expect(receivedValues.length, 10);
@@ -43,8 +43,8 @@ runTests(Serial serial) {
   test('test flush and dataAvail', () async {
     fake_arduino.flush();
     expect(fake_arduino.dataAvail(), 0);
-    
-    fake_arduino.writeInt(9);
+
+    fake_arduino.writeChar("a");
     expect(fake_arduino.dataAvail(), 1);
   });
 }

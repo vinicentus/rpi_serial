@@ -18,11 +18,11 @@ class Arduino {
   }
 
   //TODO: maybe wait for data available
-  int readInt() {
+  String readChar() {
     return device.serialGetchar();
   }
 
-  writeInt(int char) {
+  writeChar(String char) {
     device.serialPutchar(char);
   }
 

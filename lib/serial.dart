@@ -32,10 +32,11 @@ abstract class SerialDevice {
   int serialDataAvail();
 
   /// Returns the next character available on the serial device. This call will block for up to 10 seconds if no data is available
-  int serialGetchar();
+  String serialGetchar();
 
   /// Sends the single byte [char] to the serial device identified by the given file descriptor.
-  void serialPutchar(int char);
+  /// Has to be only one character long, TODO: maybe update type?
+  void serialPutchar(String char);
 
   /// Sends the nul-terminated string [s] to the serial device identified by the given file descriptor.
   void serialPuts(String s);
@@ -43,7 +44,7 @@ abstract class SerialDevice {
   //TODO: implement
   //void  serialPrintf (String message);
 
-  void serialFlush ();
+  void serialFlush();
 }
 
 /// Exceptions thrown by Serial.

@@ -9,9 +9,9 @@ main() async {
 }
 
 testSensor(Arduino arduino) {
-  print("Writing 1");
-  arduino.writeInt(1);
+  print("Writing 'a'...");
+  arduino.writeChar("a");
 
-  print("Reading");
-  print(arduino.readInt());
+  print("Reading...");
+  print(arduino.readChar());
 }
