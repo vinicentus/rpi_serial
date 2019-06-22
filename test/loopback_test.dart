@@ -25,8 +25,7 @@ runTests(Serial serial) {
     List<int> receivedValues = [];
     for (int value in values) {
       fake_arduino.writeInt(value);
-      await Future.delayed(Duration(milliseconds: 50));
-      receivedValues.add(fake_arduino.readInt());
+      receivedValues.add(await fake_arduino.readInt());
     }
 
     expect(receivedValues.length, 10);
@@ -38,6 +37,6 @@ runTests(Serial serial) {
   });
 
   test('number of bytes available', () {
-    expect(fake_arduino.dataAvail(), 1);
+    expect(fake_arduino.dataAvail(), 0);
   });
 }
