@@ -36,7 +36,7 @@ runTests(Serial serial) {
 
   test('string', () async {
     String startString = "This is a string... 12345";
-    List<String> result;
+    List<String> result = [];
     fake_arduino.writeStr(startString);
     await Future.delayed(const Duration(milliseconds: 10));
     while (fake_arduino.dataAvail() >= 1) {
