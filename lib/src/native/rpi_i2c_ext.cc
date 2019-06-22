@@ -98,7 +98,7 @@ void serialOpen(Dart_NativeArguments arguments)
 
   default:
     result = -2;
-    continue1 = false
+    continue1 = false;
   }
 
   if (((fd = open(device, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1) && continue1)
