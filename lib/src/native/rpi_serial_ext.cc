@@ -385,7 +385,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name,
 
 // Initialize the native library.
 // This is called once when the native library is loaded.
-DART_EXPORT Dart_Handle rpi_i2c_ext_Init(Dart_Handle parent_library)
+DART_EXPORT Dart_Handle rpi_serial_ext_Init(Dart_Handle parent_library)
 {
   if (Dart_IsError(parent_library))
   {

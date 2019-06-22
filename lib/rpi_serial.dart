@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:rpi_serial/serial.dart';
 //TODO: change name of external lib
-import 'dart-ext:rpi_i2c_ext';
+import 'dart-ext:rpi_serial_ext';
 
 /// The [Serial] interface used for accessing Serial devices on the Raspberry Pi.
 class RpiSerial extends Serial {
