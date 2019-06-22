@@ -10,7 +10,8 @@ class Arduino {
   final SerialDevice device;
 
   Arduino(Serial serial)
-      : device = serial.device(/* port */ "/dev/ttyAMA0", /* baudrate */ 9600) {
+      //https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/
+      : device = serial.device(/* port */ "/dev/ttyS0", /* baudrate */ 9600) {
     //say hello
     //device.serialPuts("Hello World!");
   }
