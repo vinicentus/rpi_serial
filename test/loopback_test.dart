@@ -35,6 +35,8 @@ runTests(Serial serial) {
   });
 
   test('string', () async {
+    //This whole string isn't received. Maybe the buffer is too small?
+    //Yup, this seems to fill up the send buffer before reading
     String startString = "This is a string... 12345";
     List<String> result = [];
     fake_arduino.writeStr(startString);
