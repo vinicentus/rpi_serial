@@ -20,15 +20,14 @@ runTests(Serial serial) {
     await expectThrows(() => new Arduino(serial));
   });
 
-  test('loopback test with numbers', () async {
-    final List<String> values = ["0","1","2", "3", "4", "5", "6", "7", "8", "9"];
+  test('loopback test with most of the ASCII characters', () {
+    final List<String> values = [" ", "!", '"', "#", r"$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", r"\", "]", "^", "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~"];
     List<String> receivedValues = [];
     for (String value in values) {
       fake_arduino.writeChar(value);
       receivedValues.add(fake_arduino.readChar());
     }
 
-    expect(receivedValues.length, 10);
     expect(receivedValues, values);
   });
 
