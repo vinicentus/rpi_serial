@@ -42,7 +42,7 @@ runTests(Serial serial) {
     while (fake_arduino.dataAvail() >= 1) {
       result.add(fake_arduino.readChar());
     }
-    expect(startString, result.join());
+    expect(result.join(), startString);
   });
 
   test('test flush and dataAvail', () async {
