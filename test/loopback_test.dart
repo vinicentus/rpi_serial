@@ -1,7 +1,10 @@
-import '../example/arduino_serialpassthrough.dart';
+import 'dart:async';
+
 import 'package:rpi_serial/serial.dart';
 import 'package:rpi_serial/rpi_serial.dart';
 import 'package:test/test.dart';
+
+import '../example/arduino_serialpassthrough.dart';
 
 import 'test_util.dart';
 
@@ -31,7 +34,7 @@ runTests(Serial serial) {
     expect(receivedValues, values);
   });
 
-  test('flush', () {
+  test('string', () {
     String startString = "This is a string... 12345";
     List<String> result;
     fake_arduino.writeStr(startString);
@@ -41,19 +44,12 @@ runTests(Serial serial) {
     expect(startString, result.join());
   });
 
-  test('flush', () {
-    fake_arduino.flush();
-  });
-
-  test('number of bytes available', () {
-    expect(fake_arduino.dataAvail(), 0);
-  });
-
   test('test flush and dataAvail', () async {
     fake_arduino.flush();
     expect(fake_arduino.dataAvail(), 0);
 
     fake_arduino.writeChar("a");
+    await Future.delayed(const Duration(milliseconds: 50));
     expect(fake_arduino.dataAvail(), 1);
   });
 }
