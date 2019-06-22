@@ -12,7 +12,7 @@ class Arduino {
   Arduino(Serial serial)
       : device = serial.device(/* port */ "/dev/ttyAMA0", /* baudrate */ 9600) {
     //say hello
-    device.serialPuts("Hello World!");
+    //device.serialPuts("Hello World!");
   }
 
   int readInt() {
