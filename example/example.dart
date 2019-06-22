@@ -9,9 +9,10 @@ main() async {
 }
 
 testSensor(Arduino arduino) {
-  print("Writing 'a'...");
-  arduino.writeChar("a");
-
-  print("Reading...");
-  print(arduino.readChar());
+  print(
+      "Entering endless loop mode. Please connect a cable between the rx and tx pins.");
+  while (true) {
+    //TODO: add input here
+    print(arduino.readChar());
+  }
 }
