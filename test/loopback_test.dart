@@ -32,6 +32,16 @@ runTests(Serial serial) {
   });
 
   test('flush', () {
+    String startString = "This is a string... 12345";
+    List<String> result;
+    fake_arduino.writeStr(startString);
+    while (fake_arduino.dataAvail() > 1) {
+      result.add(fake_arduino.readChar());
+    }
+    expect(startString, result.join());
+  });
+
+  test('flush', () {
     fake_arduino.flush();
   });
 

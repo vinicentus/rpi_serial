@@ -26,6 +26,10 @@ class Arduino {
     device.serialPutchar(char);
   }
 
+  writeStr(String string) {
+    device.serialPuts(string);
+  }
+
   flush() {
     device.serialFlush();
   }
