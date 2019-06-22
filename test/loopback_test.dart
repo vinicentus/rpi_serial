@@ -29,6 +29,6 @@ runTests(Serial serial) {
     }
 
     expect(receivedValues.length, 10);
-    expect(values, receivedValues);
+    expect(receivedValues, values);
   });
 }
