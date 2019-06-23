@@ -205,11 +205,11 @@ void serialPutchar(Dart_NativeArguments arguments)
   Dart_Handle arg2 = HandleError(Dart_GetNativeArgument(arguments, 2));
 
   int64_t fd;
-  const char *tempC;
+  int64_t tempC;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
-  HandleError(Dart_StringToCString(arg2, &tempC));
-  //needed to convert string to unsiigned char
-  const unsigned char c = tempC[0];
+  HandleError(Dart_IntegerToInt64(arg2, &tempC));
+  //needed to convert string to unsigned char
+  uint8_t c = tempC & 0xFF;
 
   write(fd, &c, 1);
 
@@ -225,6 +225,8 @@ void serialPutchar(Dart_NativeArguments arguments)
  */
 
 //TODO: (const int fd, const char *s)
+//TODO: test!
+//TODO: maybe remove putChar and leave only this one
 void serialPuts(Dart_NativeArguments arguments)
 {
   Dart_EnterScope();

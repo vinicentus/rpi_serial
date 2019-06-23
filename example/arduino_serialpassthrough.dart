@@ -1,7 +1,9 @@
 //TODO: make it easier to communicate, in fact, let's make it so easy that we don't need to have a device class for simple serial devices, but make it so that they can be used for more complex ones, such as gps receivers etc.
 
-/// Use the SerialPassthrough sketch on any arduino with the right voltage level.abstract
+/// Use the SerialPassthrough sketch on any arduino with the right voltage level.
 /// Connect it up and get going. TODO: write more.
+
+import 'dart:convert';
 
 import 'package:rpi_serial/serial.dart';
 
@@ -23,8 +25,13 @@ class Arduino {
     return device.serialGetchar();
   }
 
+  //TODO: add tests for writeChar and writeByte
   writeChar(String char) {
-    device.serialPutchar(char);
+    device.serialPutchar(AsciiEncoder().convert(char)[0]);
+  }
+
+  writeByte(int byte) {
+    device.serialPutchar(byte);
   }
 
   writeStr(String string) {
