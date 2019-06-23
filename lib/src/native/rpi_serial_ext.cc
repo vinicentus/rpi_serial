@@ -124,6 +124,8 @@ void serialOpen(Dart_NativeArguments arguments)
     options.c_cflag &= ~PARENB;
     options.c_cflag &= ~CSTOPB;
     options.c_cflag &= ~CSIZE;
+    //uses 8 data bits
+    //TODO: limit other parts of software to this, or allow customization
     options.c_cflag |= CS8;
     options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
     options.c_oflag &= ~OPOST;
@@ -208,7 +210,7 @@ void serialPutchar(Dart_NativeArguments arguments)
   int64_t tempC;
   HandleError(Dart_IntegerToInt64(arg1, &fd));
   HandleError(Dart_IntegerToInt64(arg2, &tempC));
-  //needed to convert string to unsigned char
+  //convert int64_t to uint8_T
   uint8_t c = tempC & 0xFF;
 
   write(fd, &c, 1);

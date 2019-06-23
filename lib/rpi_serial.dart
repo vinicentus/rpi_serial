@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:rpi_serial/serial.dart';
 import 'dart-ext:rpi_serial_ext';
 
@@ -63,8 +61,8 @@ class RpiSerialDevice extends SerialDevice {
   }
 
   @override
-  String serialGetchar() {
-    return AsciiDecoder().convert(<int>[_throwIfNegative(_serialGetchar(_fd))]);
+  int serialGetchar() {
+    return _throwIfNegative(_serialGetchar(_fd));
   }
 
   //TODO: maybe implement buffer (with error handling and legth limit)

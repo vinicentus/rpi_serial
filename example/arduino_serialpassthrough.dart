@@ -21,15 +21,23 @@ class Arduino {
   }
 
   //TODO: maybe wait for data available
+  /// Returns a single ASCII character of data
   String readChar() {
+    return AsciiDecoder().convert([device.serialGetchar()]);
+  }
+
+  /// Returns a single Byte of data, represented as an [int]
+  int readByte() {
     return device.serialGetchar();
   }
 
   //TODO: add tests for writeChar and writeByte
+  /// Writes a single ASCII character of data
   writeChar(String char) {
     device.serialPutchar(AsciiEncoder().convert(char)[0]);
   }
 
+  /// Writes a single Byte of data, represented as an [int]
   writeByte(int byte) {
     device.serialPutchar(byte);
   }

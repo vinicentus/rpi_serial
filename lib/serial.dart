@@ -34,7 +34,7 @@ abstract class SerialDevice {
   int serialDataAvail();
 
   /// Returns the next character available on the serial device. This call will block for up to 10 seconds if no data is available
-  String serialGetchar();
+  int serialGetchar();
 
   /// Sends the single byte [char] to the serial device identified by the given file descriptor.
   /// Has to be only one character long, TODO: maybe update type?
