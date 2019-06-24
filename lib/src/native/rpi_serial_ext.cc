@@ -11,6 +11,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include <errno.h>
+
 #include "include/dart_api.h"
 #include "include/dart_native_api.h"
 
@@ -258,7 +260,6 @@ FunctionLookup function_list[] = {
     {"serialFlush", serialFlush},
     {"serialClose", serialClose},
     {"serialPutchar", serialPutchar},
-    {"serialPuts", serialPuts},
     {"serialDataAvail", serialDataAvail},
     {"serialGetchar", serialGetchar},
     {NULL, NULL},
