@@ -42,10 +42,6 @@ class Arduino {
     device.serialPutchar(byte);
   }
 
-  writeStr(String string) {
-    device.serialPuts(string);
-  }
-
   flush() {
     device.serialFlush();
   }

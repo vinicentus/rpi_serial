@@ -73,11 +73,6 @@ class RpiSerialDevice extends SerialDevice {
   }
 
   @override
-  void serialPuts(String s) {
-    _throwIfNegative(_serialPuts(_fd, s));
-  }
-
-  @override
   void serialFlush() {
     _throwIfNegative(_serialFlush(_fd));
   }
@@ -91,12 +86,9 @@ class RpiSerialDevice extends SerialDevice {
     return value;
   }
 
-  //TODO: implement
-  int _lastError(int value) => value;
+  int _lastError(int value) native "lastError";
   int _serialDataAvail(int fd) native "serialDataAvail";
   int _serialGetchar(int fd) native "serialGetchar";
-  //TODO: find better type
   int _serialPutchar(int fd, int c) native "serialPutchar";
-  int _serialPuts(int fd, String s) native "serialPuts";
   int _serialFlush(int fd) native "serialFlush";
 }

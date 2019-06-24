@@ -34,19 +34,6 @@ runTests(Serial serial) {
     expect(receivedValues, values);
   });
 
-  test('string', () async {
-    //This whole string isn't received. Maybe the buffer is too small?
-    //Yup, this seems to fill up the send buffer before reading
-    String startString = "This is a string... 12345";
-    List<String> result = [];
-    fake_arduino.writeStr(startString);
-    await Future.delayed(const Duration(milliseconds: 10));
-    while (fake_arduino.dataAvail() >= 1) {
-      result.add(fake_arduino.readChar());
-    }
-    expect(result.join(), startString);
-  });
-
   test('test flush and dataAvail', () async {
     fake_arduino.flush();
     expect(fake_arduino.dataAvail(), 0);

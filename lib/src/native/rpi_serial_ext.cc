@@ -21,29 +21,19 @@ Dart_Handle HandleError(Dart_Handle handle) {
   return handle;
 }
 
-//TODO: maybe include errno and this
-/*
-// The errno from the last I2C command
+// The errno from the last Serial command
 static volatile int64_t lastErrno = 0;
 
-// Return the errno from the last I2C command
-//int _lastError() native "lastError";
+/// Return the errno from the last Serial command
 void lastError(Dart_NativeArguments arguments) {
   Dart_EnterScope();
 
   Dart_SetIntegerReturnValue(arguments, lastErrno);
   Dart_ExitScope();
 }
-*/
 
-/*
- * serialOpen:
- *	Open and initialise the serial port, setting all the right
- *	port parameters - or as many as are required - hopefully!
- *********************************************************************************
- */
-
-//TODO: const char *device, const int baud
+/// Open and initialise the serial port, setting all the right
+/// port parameters - or as many as are required - hopefully!
 void serialOpen(Dart_NativeArguments arguments)
 {
   Dart_EnterScope();
@@ -98,12 +88,14 @@ void serialOpen(Dart_NativeArguments arguments)
 
   default:
     result = -2;
+    lastErrno = errno;
     continue1 = false;
   }
 
   if (((fd = open(device, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1) && continue1)
   {
     result = -1;
+    lastErrno = errno;
     continue2 = false;
   }
 
@@ -145,18 +137,14 @@ void serialOpen(Dart_NativeArguments arguments)
     usleep(10000); // 10mS
 
     result = fd;
+    lastErrno = 0;
   }
 
   Dart_SetIntegerReturnValue(arguments, result);
   Dart_ExitScope();
 }
 
-/*
- * serialFlush:
- *	Flush the serial buffers (both tx & rx)
- *********************************************************************************
- */
-
+/// Flush the serial buffers (both tx & rx)
 void serialFlush(Dart_NativeArguments arguments)
 {
   Dart_EnterScope();
@@ -167,17 +155,12 @@ void serialFlush(Dart_NativeArguments arguments)
 
   tcflush(fd, TCIOFLUSH);
 
-  //return 1 for now TODO: don't return anything?
-  Dart_SetIntegerReturnValue(arguments, 1);
+  //return 0 for now TODO: don't return anything?
+  Dart_SetIntegerReturnValue(arguments, 0);
   Dart_ExitScope();
 }
 
-/*
- * serialClose:
- *	Release the serial port
- *********************************************************************************
- */
-
+/// Release the serial port
 void serialClose(Dart_NativeArguments arguments)
 {
   Dart_EnterScope();
@@ -193,13 +176,7 @@ void serialClose(Dart_NativeArguments arguments)
   Dart_ExitScope();
 }
 
-/*
- * serialPutchar:
- *	Send a single character to the serial port
- *********************************************************************************
- */
-
-//TODO: (const int fd, const unsigned char c)
+/// Send a single byte to the serial port
 void serialPutchar(Dart_NativeArguments arguments)
 {
   Dart_EnterScope();
@@ -215,53 +192,12 @@ void serialPutchar(Dart_NativeArguments arguments)
 
   write(fd, &c, 1);
 
-  //return 1 for now TODO: don't return anything?
-  Dart_SetIntegerReturnValue(arguments, 1);
+  //return 0 for now TODO: don't return anything?
+  Dart_SetIntegerReturnValue(arguments, 0);
   Dart_ExitScope();
 }
 
-/*
- * serialPuts:
- *	Send a string to the serial port
- *********************************************************************************
- */
-
-//TODO: (const int fd, const char *s)
-//TODO: test!
-//TODO: maybe remove putChar and leave only this one
-void serialPuts(Dart_NativeArguments arguments)
-{
-  Dart_EnterScope();
-  Dart_Handle arg1 = HandleError(Dart_GetNativeArgument(arguments, 1));
-  Dart_Handle arg2 = HandleError(Dart_GetNativeArgument(arguments, 2));
-
-  int64_t fd;
-  //https://github.com/dart-lang/sdk/blob/7b893ce825fbdd2549cc3b3d29d566d9aba05f00/samples/sample_extension/sample_extension.cc#L165-L166
-  const char *s;
-  HandleError(Dart_IntegerToInt64(arg1, &fd));
-  //TODO: check that this is the right dart/c conversion method
-  HandleError(Dart_StringToCString(arg2, &s));
-
-  write(fd, s, strlen(s));
-
-  //return 1 for now TODO: don't return anything?
-  Dart_SetIntegerReturnValue(arguments, 1);
-  Dart_ExitScope();
-}
-
-//TODO: implement?
-/*
- * serialPrintf:
- *	Printf over Serial
- *********************************************************************************
- */
-
-/*
- * serialDataAvail:
- *	Return the number of bytes of data avalable to be read in the serial port
- *********************************************************************************
- */
-
+/// Return the number of bytes of data avalable to be read in the serial port
 void serialDataAvail(Dart_NativeArguments arguments)
 {
   Dart_EnterScope();
@@ -275,20 +211,16 @@ void serialDataAvail(Dart_NativeArguments arguments)
 
   if (ioctl(fd, FIONREAD, &result) == -1)
     result = -1;
+    lastErrno = errno;
 
-  //check that this return works
+  //TODO: move?
+  lastErrno = 0;
   Dart_SetIntegerReturnValue(arguments, result);
   Dart_ExitScope();
 }
 
-/*
- * serialGetchar:
- *	Get a single character from the serial device.
- *	Note: Zero is a valid character and this function will time-out after
- *	10 seconds.
- *********************************************************************************
- */
-
+/// Get a single byte from the serial device.
+/// Note: This function will time-out after 10 seconds.
 void serialGetchar(Dart_NativeArguments arguments)
 {
   Dart_EnterScope();
@@ -303,9 +235,11 @@ void serialGetchar(Dart_NativeArguments arguments)
 
   if (read(fd, &x, 1) != 1)
     result = -1;
+    lastErrno = errno;
 
   //&0xFF is completely unnecessary?
   result = ((int)x) & 0xFF;
+  lastErrno = errno;
 
   //check that this return works
   //TODO: also make sure sending -1 isn't an error
@@ -322,6 +256,7 @@ struct FunctionLookup
 };
 
 FunctionLookup function_list[] = {
+    {"lastErrno", lastErrno},
     {"serialOpen", serialOpen},
     {"serialFlush", serialFlush},
     {"serialClose", serialClose},

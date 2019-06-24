@@ -40,14 +40,6 @@ abstract class SerialDevice {
   /// Has to be only one character long, TODO: maybe update type?
   void serialPutchar(int char);
 
-  /// Sends the nul-terminated string [s] to the serial device identified by the given file descriptor.
-  void serialPuts(String s);
-
-  //TODO: add binary send and read
-
-  //TODO: implement
-  //void  serialPrintf (String message);
-
   void serialFlush();
 }
 
