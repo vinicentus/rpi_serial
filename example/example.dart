@@ -12,7 +12,7 @@ testSensor(Arduino arduino) {
   print(
       "Entering endless loop mode. Please connect a cable between the rx and tx pins.");
   while (true) {
-    //TODO: add input here
+    //TODO: add input here, then send that
     print(arduino.readChar());
   }
 }

@@ -12,7 +12,7 @@ main() {
 
 runTests(Serial serial) {
   test('exceptions', () async {
-    // Only one instance of I2C factory
+    // Only one instance of Serial factory
     await expectThrows(() => new RpiSerial());
   });
 }

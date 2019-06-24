@@ -9,6 +9,7 @@ import 'package:rpi_serial/serial.dart';
 
 /// Any Arduino, set up to forward serial messages from pc to raspberry pi and vice versa
 class Arduino {
+  //TODO: change to RpiSerialDevice?
   final SerialDevice device;
 
   //TODO: change to basic device

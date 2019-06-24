@@ -155,7 +155,7 @@ void serialFlush(Dart_NativeArguments arguments)
 
   tcflush(fd, TCIOFLUSH);
 
-  //return 0 for now TODO: don't return anything?
+  //return 0 for now
   Dart_SetIntegerReturnValue(arguments, 0);
   Dart_ExitScope();
 }
@@ -171,7 +171,7 @@ void serialClose(Dart_NativeArguments arguments)
 
   close(fd);
 
-  //return 0
+  //return 0 for now
   Dart_SetIntegerReturnValue(arguments, 0);
   Dart_ExitScope();
 }
@@ -192,7 +192,7 @@ void serialPutchar(Dart_NativeArguments arguments)
 
   write(fd, &c, 1);
 
-  //return 0 for now TODO: don't return anything?
+  //return 0 for now
   Dart_SetIntegerReturnValue(arguments, 0);
   Dart_ExitScope();
 }
@@ -237,12 +237,9 @@ void serialGetchar(Dart_NativeArguments arguments)
     result = -1;
     lastErrno = errno;
 
-  //&0xFF is completely unnecessary?
   result = ((int)x) & 0xFF;
   lastErrno = errno;
 
-  //check that this return works
-  //TODO: also make sure sending -1 isn't an error
   Dart_SetIntegerReturnValue(arguments, result);
   Dart_ExitScope();
 }
@@ -262,7 +259,6 @@ FunctionLookup function_list[] = {
     {"serialClose", serialClose},
     {"serialPutchar", serialPutchar},
     {"serialPuts", serialPuts},
-    //TODO: {"serialPrintf", serialPrintf},
     {"serialDataAvail", serialDataAvail},
     {"serialGetchar", serialGetchar},
     {NULL, NULL},
