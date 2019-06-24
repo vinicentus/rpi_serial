@@ -255,7 +255,7 @@ struct FunctionLookup
 };
 
 FunctionLookup function_list[] = {
-    {"lastErrno", lastErrno},
+    {"lastError", lastError},
     {"serialOpen", serialOpen},
     {"serialFlush", serialFlush},
     {"serialClose", serialClose},
