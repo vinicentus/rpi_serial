@@ -14,14 +14,21 @@ main() {
   test('dispose', () => serial.dispose());
 }
 
+/// This test requires that you connect the RX and TX pins together
 runTests(Serial serial) {
   BasicSerialDevice device;
-
-  //TODO: add tests for writeChar and writeByte
 
   test('instantiate once', () async {
     device = BasicSerialDevice(serial);
     await expectThrows(() => BasicSerialDevice(serial));
+  });
+
+  test('read and write bytes', () {
+    final List<int> bytesToSend = [0x00, 0x01, 0x06, 0x09, 0x0F, 0x3F, 0x63, 0x67, 0x9F, 0xFF];
+    for (int byte in bytesToSend) {
+      device.writeByte(byte);
+      expect(device.readByte(), byte);
+    }
   });
 
   test('loopback test with most of the ASCII characters', () {
