@@ -9,7 +9,7 @@ class RpiSerial extends Serial {
 
   RpiSerial() {
     if (_instantiatedSerial) {
-      throw new SerialException('Serial already instantiated');
+      throw SerialException('Serial already instantiated');
     }
     _instantiatedSerial = true;
   }
@@ -18,8 +18,8 @@ class RpiSerial extends Serial {
   SerialDevice device(String port, int baud) {
     allocatePort(port);
     int fd = _serialOpen(port, baud);
-    if (fd < 0) throw new SerialException('device init failed: $fd');
-    final device = new RpiSerialDevice(port, baud, fd);
+    if (fd < 0) throw SerialException('device init failed: $fd');
+    final device = RpiSerialDevice(port, baud, fd);
     _devices.add(device);
     return device;
   }
@@ -28,7 +28,7 @@ class RpiSerial extends Serial {
   void dispose() {
     while (_devices.isNotEmpty) {
       int result = _serialClose(_devices.removeLast()._fd);
-      if (result != 0) throw new SerialException('dispose failed: $result');
+      if (result != 0) throw SerialException('dispose failed: $result');
     }
   }
 
@@ -36,14 +36,14 @@ class RpiSerial extends Serial {
   //TODO: add tests
   @override
   void disposeSpecific(String port) {
-    if (_devices.isEmpty) throw new SerialException('Nothing to dipose.');
+    if (_devices.isEmpty) throw SerialException('Nothing to dipose.');
     RpiSerialDevice port2 = _devices.singleWhere(
         (RpiSerialDevice device) => device.port == port,
         orElse: () => null);
-    if (port2 == null) throw new SerialException("Can't find the device.");
+    if (port2 == null) throw SerialException("Can't find the device.");
     int result = _serialClose(port2._fd);
     _devices.remove(port2);
-    if (result != 0) throw new SerialException('dispose failed: $result');
+    if (result != 0) throw SerialException('dispose failed: $result');
   }
 
   int _serialOpen(String port, int baud) native "serialOpen";
@@ -80,7 +80,7 @@ class RpiSerialDevice extends SerialDevice {
   /// Throw an exception if [value] is less than zero, else return [value].
   int _throwIfNegative(int value) {
     if (value < 0) {
-      throw new SerialException(
+      throw SerialException(
           'operation failed: $value', port, _lastError(value));
     }
     return value;

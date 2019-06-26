@@ -5,7 +5,7 @@ import 'basic_test.dart' as basic;
 import 'loopback_test.dart' as loopback;
 
 main() {
-  final serial = new RpiSerial();
+  final serial = RpiSerial();
   group('basic', () => basic.runTests(serial));
   group('deviceTests', () => loopback.runTests(serial));
   test('dispose', () => serial.dispose());

@@ -9,37 +9,38 @@ import '../example/arduino_serialpassthrough.dart';
 import 'test_util.dart';
 
 main() {
-  final serial = new RpiSerial();
+  final serial = RpiSerial();
   runTests(serial);
   test('dispose', () => serial.dispose());
 }
 
-//TODO: change so that it doesn't use arduino class
 runTests(Serial serial) {
-  Arduino fake_arduino;
+  BasicSerialDevice device;
+
+  //TODO: add tests for writeChar and writeByte
 
   test('instantiate once', () async {
-    fake_arduino = new Arduino(serial);
-    await expectThrows(() => new Arduino(serial));
+    device = BasicSerialDevice(serial);
+    await expectThrows(() => BasicSerialDevice(serial));
   });
 
   test('loopback test with most of the ASCII characters', () {
     final List<String> values = [" ", "!", '"', "#", r"$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", ";", "<", "=", ">", "?", "@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", r"\", "]", "^", "_", "`", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "{", "|", "}", "~"];
     List<String> receivedValues = [];
     for (String value in values) {
-      fake_arduino.writeChar(value);
-      receivedValues.add(fake_arduino.readChar());
+      device.writeChar(value);
+      receivedValues.add(device.readChar());
     }
 
     expect(receivedValues, values);
   });
 
   test('test flush and dataAvail', () async {
-    fake_arduino.flush();
-    expect(fake_arduino.dataAvail(), 0);
+    device.flush();
+    expect(device.dataAvail(), 0);
 
-    fake_arduino.writeChar("a");
+    device.writeChar("a");
     await Future.delayed(const Duration(milliseconds: 10));
-    expect(fake_arduino.dataAvail(), 1);
+    expect(device.dataAvail(), 1);
   });
 }

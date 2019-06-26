@@ -1,15 +1,13 @@
-//port == device?
-
 /// Base Serial interface supported by all Serial implementations.
 abstract class Serial {
   final _allocatedAddresses = <String>[];
 
   /// Check that the port can be used for Serial
   /// and that is has not already been allocated.
-  /// This should be called by subclasses not clients.
+  /// This should be called by subclasses, not clients.
   void allocatePort(String port) {
     if (_allocatedAddresses.contains(port)) {
-      throw new SerialException('Already allocated', port);
+      throw SerialException('Already allocated', port);
     }
     _allocatedAddresses.add(port);
   }
@@ -30,16 +28,17 @@ abstract class SerialDevice {
 
   SerialDevice(this.port, this.baud);
 
-  /// Returns the number of characters available for reading.
+  /// Returns the number of bytes available for reading.
   int serialDataAvail();
 
-  /// Returns the next character available on the serial device. This call will block for up to 10 seconds if no data is available
+  /// Returns the next byte available on the serial device. This call will block for up to 10 seconds if no data is available
   int serialGetchar();
 
   /// Sends the single byte [char] to the serial device identified by the given file descriptor.
   /// Has to be only one character long, TODO: maybe update type?
   void serialPutchar(int char);
 
+  /// Flushes the TX and RX buffers
   void serialFlush();
 }
 
