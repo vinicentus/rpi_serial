@@ -4,7 +4,7 @@ import 'package:rpi_serial/serial.dart';
 import 'package:rpi_serial/rpi_serial.dart';
 import 'package:test/test.dart';
 
-import '../example/arduino_serialpassthrough.dart';
+import '../example/basic_device.dart';
 
 import 'test_util.dart';
 

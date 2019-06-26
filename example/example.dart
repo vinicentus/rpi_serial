@@ -1,6 +1,6 @@
 import 'package:rpi_serial/rpi_serial.dart';
 
-import 'arduino_serialpassthrough.dart';
+import 'basic_device.dart';
 
 main() async {
   final serial_connection = RpiSerial();
