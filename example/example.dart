@@ -9,6 +9,8 @@ main() async {
   serial_connection.dispose();
 }
 
+// Sends a random number between [0-9] to the serial port, and reads the incoming character.
+// Place a jumper between the TX and RX pins to read the characters
 testSensor(BasicSerialDevice device) async {
   print(
       "Entering endless loop mode. Please connect a cable between the rx and tx pins.");
