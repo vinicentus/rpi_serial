@@ -31,6 +31,12 @@ class BasicSerialDevice {
     device.serialPutchar(byte);
   }
 
+  void sendMultipleBytes(List<int> list) {
+    for (int byte in list) {
+      device.serialPutchar(byte);
+    }
+  }
+
   /// Clears both the TX and RX buffers
   flush() {
     device.serialFlush();
