@@ -1,10 +1,10 @@
 name: rpi_serial
 version: 0.1.0
 author: Vincent Långström <vincent.langstrom@gmail.com>
-description: rpi_serial is a Dart library for using Serial on the Raspberry Pi.
+description: rpi_serial is a Dart package for using serial communication on the Raspberry Pi.
 homepage: https://github.com/vinicentus/rpi_serial
 environment:
-  sdk: '>=2.0.0-dev.60.0 <3.0.0'
+  sdk: '>=2.0.0 <3.0.0'
 dependencies:
   path: '>=1.0.0 <2.0.0'
 dev_dependencies:
